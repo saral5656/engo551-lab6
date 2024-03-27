@@ -6,7 +6,6 @@
     <title>Leaflet Map</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <!-- Add any additional CSS links or styles here -->
     <style>
         #map {
             width: 100%;
@@ -15,44 +14,41 @@
     </style>
 </head>
 <body>
-    <!-- Leaflet Map container -->
+    <!--Map-->
     <div id="map"></div>
+    
     <!-- Button to simplify the polyline -->
     <button onclick="simplifyPolyline()">Simplify Polyline</button>
+    
     <!-- Button to clear polylines -->
     <button onclick="clearPolylines()">Clear Polylines</button>
 
-    <!-- Leaflet JavaScript -->
+    <!-- Add Leaflet JavaScript and Turf.js-->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <!-- Turf.js JavaScript from a different CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.3.0/turf.min.js"></script>
-    <!-- Add any additional JavaScript libraries or scripts here -->
+
+    <!--Setup Map-->
     <script>
-        // Initialize Leaflet map
         var map = L.map('map').setView([51.505, -0.09], 13);
 
-        // Add a tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Initialize arrays to store unsimplified and simplified polyline coordinates
+        // Initialize arrays to store unsimplified and simplified polyline coordinates and variable to store the drawn polylines layers
         var unsimplifiedCoords = [];
         var simplifiedCoords = [];
 
-        // Variable to store the drawn polylines layers
         var unsimplifiedPolyline;
         var simplifiedPolyline;
 
-        // Function to handle map click event
+        // Function to draw polyline
         function onMapClick(e) {
-            // Add clicked coordinates to the unsimplified polyline array
             unsimplifiedCoords.push([e.latlng.lat, e.latlng.lng]);
-            // Draw the unsimplified polyline
             drawUnsimplifiedPolyline();
         }
 
-        // Function to draw the unsimplified polyline
+        // Function to draw unsimplified polyline
         function drawUnsimplifiedPolyline() {
             // Remove existing unsimplified polyline layer if any
             if (unsimplifiedPolyline) {
@@ -95,12 +91,10 @@
 
         // Function to clear polylines
         function clearPolylines() {
-            // Clear unsimplified polyline
             unsimplifiedCoords = [];
             if (unsimplifiedPolyline) {
                 map.removeLayer(unsimplifiedPolyline);
             }
-            // Clear simplified polyline
             simplifiedCoords = [];
             if (simplifiedPolyline) {
                 map.removeLayer(simplifiedPolyline);
